@@ -9,7 +9,7 @@ public class Conta {
 
     private int numero;
     private String agencia;
-    private BigDecimal saldo;
+    private BigDecimal saldo = BigDecimal.ZERO;
     private Cliente cliente;
 
     public Conta(int numero, String agencia, BigDecimal saldo, Cliente cliente) {
@@ -41,10 +41,10 @@ public class Conta {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        Objects.requireNonNull(saldo);
-        if (saldo.compareTo(new BigDecimal("0.0")) < 1) throw new ContaBancariaException("Saldo inválido.");
-        this.saldo = saldo;
+    public void setSaldo(BigDecimal valor) {
+        Objects.requireNonNull(valor);
+        if (valor.compareTo(new BigDecimal("0.0")) < 0) throw new ContaBancariaException("O saldo não pode ser negativo");
+        this.saldo = saldo.add(valor);
     }
 
     public Cliente getCliente() {
